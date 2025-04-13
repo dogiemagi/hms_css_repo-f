@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .back-btn {
+            display: block;
+            width: 150px;
+            margin: 30px auto 0;
+            padding: 12px;
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Doctor Details</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Gender</th> <!-- Added Gender Column -->
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th>Contact</th>
+            <th>Available Slots</th>
+            <th>Username</th>
+            <th>Password (Hashed)</th>
+        </tr>
+        {% for doc in doctors %}
+        <tr>
+            <td>{{ doc[0] }}</td>
+            <td>{{ doc[1] }}</td>
+            <td>{{ doc[2] }}</td> <!-- Gender Value -->
+            <td>{{ doc[3] }}</td>
+            <td>{{ doc[4] }}</td>
+            <td>{{ doc[5] }}</td>
+            <td>{{ doc[6] }}</td>
+            <td>{{ doc[7] }}</td>
+            <td>{{ doc[8] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/admin/dashboard" class="back-btn">← Back to Dashboard</a>
+</body>
+</html>

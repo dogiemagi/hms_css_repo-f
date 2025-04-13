@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .nested-table {
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+        .nested-table th {
+            background-color: #6c757d;
+            color: white;
+            font-size: 14px;
+        }
+        .nested-table td {
+            font-size: 14px;
+            background-color: #fff;
+        }
+        em {
+            color: #888;
+        }
+        .iframe-container {
+            max-width: 600px;
+            max-height: 400px;
+            margin: 10px auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .back-btn {
+            display: block;
+            width: 220px;
+            margin: 0 auto;
+            padding: 12px;
+            text-align: center;
+            background-color: #1371c4;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #10309b;
+        }
+    </style>
+</head>
+<body>
+    <h2>All Patient Medical Records</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Contact</th>
+            <th>Username</th>
+            <th>Medical Records</th>
+        </tr>
+        {% for username, patient in patients.items() %}
+        <tr>
+            <td>{{ patient.id }}</td>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.gender }}</td>
+            <td>{{ patient.contact }}</td>
+            <td>{{ username }}</td>
+            <td>
+                {% if patient.records %}
+                <table class="nested-table">
+                    <thead>
+                        <tr>
+                            <th>Record ID</th>
+                            <th>Scan and Report</th>
+                            <th>Normal Report</th>
+                            <th>Upload Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in patient.records %}
+                        <tr>
+                            <td>{{ record.id }}</td>
+
+                            <td>
+                                {% if record.scan_and_report %}
+                                    {% set file_id = record.scan_and_report.split('/d/')[1].split('/')[0] %}
+                                    <div class="iframe-container">
+                                        <iframe src="https://drive.google.com/file/d/{{ file_id }}/preview"></iframe>
+                                    </div>
+                                {% else %} N/A {% endif %}
+                            </td>
+                            <td>
+                                {% if record.normal_report %}
+                                    {% set file_id = record.normal_report.split('/d/')[1].split('/')[0] %}
+                                    <div class="iframe-container">
+                                        <iframe src="https://drive.google.com/file/d/{{ file_id }}/preview"></iframe>
+                                    </div>
+                                {% else %} N/A {% endif %}
+                            </td>
+                            <td>{{ record.upload_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <em>No medical records found.</em>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% block back_button %}
+<a href="#" class="back-btn">← Back to Dashboard</a>
+{% endblock %}
+
+</body>
+</html>

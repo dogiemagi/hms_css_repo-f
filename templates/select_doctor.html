@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Doctor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Select a Doctor</h1>
+
+    <div class="doctor-list">
+        <h2>Available Doctors</h2>
+        <ul>
+            {% for doctor in doctors %}
+                <li>
+                    <!-- Ensure that the doctor's username is passed correctly to the route -->
+                    <a href="{{ url_for('select_doctor_slots', doctor_username=doctor.username) }}">
+                        Dr. {{ doctor.username }} - {{ doctor.specialization }} - {{ doctor.gender }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="navbar">
+        <a href="/user">Back to Dashboard</a>
+    </div>
+</body>
+</html>

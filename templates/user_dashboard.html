@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+        }
+        .navbar {
+            background-color: #007BFF;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #0056b3;
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+        .dashboard {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .dashboard h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .actions a button {
+            width: 100%;
+            padding: 15px;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .actions a button:hover {
+            background-color: #0056b3;
+        }
+        .flash-messages {
+            margin-top: 20px;
+            color: red;
+        }
+        .appointment-details {
+            margin-top: 30px;
+        }
+        .appointment-details p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>User Dashboard</h1>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard">
+        <h2>{{ session['username'] }}'s Dashboard</h2>
+
+        <div class="actions">
+            <a href="/user/book"><button>Book Appointment</button></a>
+            <a href="{{ url_for('view_user_records') }}"><button>View My Medical Records</button></a>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if appointment %}
+            <div class="appointment-details">
+                <h3>Your Booked Appointment:</h3>
+                <p><strong>Slot ID:</strong> {{ appointment[0] }}</p>  <!-- Slot ID -->
+                <p><strong>Date & Time:</strong> {{ appointment[1] }}</p> <!-- Slot DateTime -->
+                <p><strong>Doctor:</strong> Dr. {{ appointment[2] }}  <!-- Doctor's Name -->
+                <p><strong>Specialization:</strong> {{ appointment[3] }}  <!-- Doctor's Specialization -->
+            </div>
+        {% else %}
+            <p style="margin-top: 30px; color: gray;">You have no active appointments.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

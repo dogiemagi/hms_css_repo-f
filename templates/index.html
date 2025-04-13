@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background-color: #1951c9;
+            padding: 15px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f0e68c;
+        }
+
+        /* New dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px; /* Added upper space */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #1951c9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-top: 10px; /* Space below the button */
+            margin-bottom: 10px; /* Space below the dropdown */
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #0d335e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        p.welcome-text {
+            color: #555;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        a.login-btn {
+            display: block;
+            width: 200px;
+            text-align: center;
+            margin: 20px auto;
+            background-color: #1951c9;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.login-btn:hover {
+            background-color: #0d335e;
+        }
+
+        .doctor-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            padding: 0 10px;
+        }
+
+        .doctor-card {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 250px;
+        }
+
+        .doctor-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .doctor-card p {
+            margin: 4px 0;
+            color: #555;
+        }
+
+        h2 {
+            text-align: center;
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with navigation -->
+    <header>
+        <h1>Our Hospital</h1>
+        <nav>
+            <a href="/about">About Us</a>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown(event)">Specialties</a>
+                <div class="dropdown-content" id="dropdown-content">
+                    <a href="/specialty/cardiology">Cardiology</a>
+                    <a href="/specialty/neurology">Neurology</a>
+                    <a href="/specialty/orthopedics">Orthopedics</a>
+                    <a href="/specialty/dermatology">Dermatology</a>
+                    <a href="/specialty/gynecology">Gynecology</a>
+                    <a href="/specialty/pediatrics">Pediatrics</a>
+                </div>
+            </div>
+            <a href="/contact">Contact Us</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+
+    <!-- Welcome block -->
+    <div class="container">
+        <h2>Welcome to Our Hospital</h2>
+        <p class="welcome-text">We provide world-class healthcare services with a dedicated team of doctors, nurses, and healthcare professionals. Our hospital is equipped with the latest technology to ensure the best care for you and your family. Explore our specialties and book an appointment with our experienced doctors today.</p>
+    </div>
+
+    <!-- Doctor Cards -->
+    <h3 style="margin-left: 40px;">Doctors Available</h3>
+    <div class="doctor-container" style="margin-left: 40px;">
+        {% for doctor in doctors %}
+        <div class="doctor-card">
+            <h3>Dr. {{ doctor[0] }}</h3>
+            <p>Specialty: {{ doctor[1] }}</p>
+            <p>Experience: {{ doctor[2] }} yrs</p>
+            <p>Gender: {{ doctor[3] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function toggleDropdown(event) {
+            event.preventDefault(); // Prevent default link behavior
+            var dropdown = document.getElementById("dropdown-content");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+    </script>
+
+</body>
+</html>

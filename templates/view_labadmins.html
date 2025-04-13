@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Lab Admins</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .back-btn {
+            display: block;
+            width: 180px;
+            margin: 30px auto 0;
+            padding: 12px;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <h2>All Lab Admins</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Phone</th>
+            <th>Username</th>
+            <th>Password (Hashed)</th>
+        </tr>
+        {% for admin in labadmins %}
+        <tr>
+            <td>{{ admin['name'] }}</td>
+            <td>{{ admin['specialization'] }}</td>
+            <td>{{ admin['phone'] }}</td>
+            <td>{{ admin['username'] }}</td>
+            <td>{{ admin['password'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/admin/dashboard" class="back-btn">← Back to Dashboard</a>
+</body>
+</html>

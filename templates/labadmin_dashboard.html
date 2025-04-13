@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+        }
+    
+        .navbar {
+            background-color: #007BFF;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+    
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+    
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #0056b3;
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+    
+        .dashboard {
+            width: 90%;
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    
+        .dashboard h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 22px;
+        }
+    
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+    
+        .actions a button {
+            width: 100%;
+            padding: 14px;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .actions a button:hover {
+            background-color: #0056b3;
+        }
+    
+        .logout-section {
+            text-align: center;
+        }
+    
+        .logout-section a {
+            color: red;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    
+        .logout-section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="navbar">
+        <h1>Lab Admin Dashboard</h1>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard">
+        <h2>Welcome, Lab Admin {{ session['username'] }}</h2>
+
+        <div class="actions">
+            <a href="/labadmin/upload"><button>➕ Upload Medical History</button></a>
+            <a href="{{ url_for('labadmin_view_patients') }}"><button>👨‍⚕️ View Patients</button></a>
+        </div>
+
+        <div class="logout-section">
+            <p><a href="/logout">🚪 Logout</a></p>
+        </div>
+    </div>
+</body>
+</html>

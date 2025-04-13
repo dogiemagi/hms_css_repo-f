@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e2e6ea;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        a.button:hover {
+            background-color: #218838;
+        }
+
+        .back-btn-container {
+            text-align: center;
+        }
+
+        .iframe-container {
+            max-width: 300px;
+            max-height: 200px;
+            margin: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .no-records {
+            text-align: center;
+            color: #555;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Medical History for {{ patient['name'] if patient else 'You' }}</h2>
+
+    {% if records %}
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Scan and Report</th>
+                <th>Normal Report</th>
+                <th>Upload Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.username }}</td>
+                <td>
+                    {% if record.scan_and_report %}
+                        <div class="iframe-container">
+                            {% set file_id = record.scan_and_report.split('/d/')[1].split('/')[0] %}
+                            <iframe src="https://drive.google.com/file/d/{{ file_id }}/preview"></iframe>
+                        </div>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record.normal_report %}
+                        <div class="iframe-container">
+                            {% set file_id = record.normal_report.split('/d/')[1].split('/')[0] %}
+                            <iframe src="https://drive.google.com/file/d/{{ file_id }}/preview"></iframe>
+                        </div>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ record.upload_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="no-records">No medical records found for this patient.</p>
+    {% endif %}
+
+    <div class="back-btn-container">
+        <a href="{{ url_for('doctor_dashboard') }}" class="button">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

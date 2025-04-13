@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Medical Reports</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            margin-top: 15px;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            max-width: 600px;
+            margin: 20px auto;
+            padding-left: 0;
+            list-style: none;
+            color: green;
+        }
+
+        ul li {
+            background-color: #e6ffed;
+            padding: 10px;
+            border: 1px solid #b2f2bb;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        .back-btn {
+            display: block;
+            width: 220px;
+            margin: 0 auto;
+            padding: 12px;
+            text-align: center;
+            background-color: #22a358;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #059b2b;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Upload Medical Reports</h2>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/labadmin/upload" method="POST" enctype="multipart/form-data">
+        <label for="username">Patient Username:</label>
+    <input type="text" name="username" required><br>
+        <label for="scan_and_report">Scan and Report (optional):</label>
+        <input type="text" name="scan_and_report" id="scan_and_report">
+
+        <label for="normal_report">Normal Report (optional):</label>
+        <input type="text" name="normal_report" id="normal_report">
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <a href="/labadmin" class="back-btn">← Back to Dashboard</a>
+</body>
+</html>

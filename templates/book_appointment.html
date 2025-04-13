@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>Book Appointment</title>
+</head>
+<body>
+<h2>Book Appointment</h2>
+<form method="POST">
+    <select name="doctor_id">
+    {% for doc in doctors %}
+        <option value="{{ doc[0] }}">{{ doc[1] }} - {{ doc[2] }} ({{ doc[3] }} slots left)</option>
+    {% endfor %}
+    </select>
+    <input type="datetime-local" name="date" required>
+    <button type="submit">Book</button>
+</form>
+</body>
+</html>

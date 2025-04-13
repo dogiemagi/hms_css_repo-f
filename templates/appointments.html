@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Appointments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .appointments-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .appointment-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            width: 280px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .appointment-card:hover {
+            transform: scale(1.05);
+        }
+        .appointment-card h3 {
+            margin-top: 0;
+        }
+        .flash-messages {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            list-style: none;
+            font-size: 14px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+        .flash-messages li {
+            margin: 5px 0;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <h2>Today's Appointments</h2>
+
+        <!-- Container for appointments -->
+        <div class="appointments-container">
+            {% for appointment in appointments %}
+            <div class="appointment-card">
+                <p><strong>Slot ID: {{ appointment.slot_id }}</strong></p>
+                <p><strong>Slot Date & Time:</strong> {{ appointment.slot_datetime }}</p>
+                <p><strong>Patient Name:</strong> {{ appointment.patient_name }}</p>
+                <form action="/doctor/delete_appointment/{{ appointment.slot_id }}" method="POST">
+                    <button type="submit" class="delete-btn">Delete Appointment</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('doctor_dashboard') }}" class="back-btn">← Back to Doctor Dashboard</a> 
+    </div>
+        
+    
+</body>
+</html>
